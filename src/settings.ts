@@ -9,7 +9,7 @@ type RequestWithParams<P> = Request<P, {}, {}, {}>
 type RequestWithBody<B> = Request<{}, {}, B, {}>
 type RequestWithBodyAndParams<P,B> = Request<P, {}, B, {}>
 
-type CreateVidioDto = {
+type CreateVideoDto = {
     title: string,
     author: string,
     availableResolutions: typeof AvailableResolutions
@@ -51,15 +51,24 @@ const videos: VideoType[] = [
         ]
     }
 ]
-
-app.get('/videos', (req: Request, res: Response) => {
-    res.send(videos)
-})
-
 type Params = {
     id: string
 }
-
+type UpdateVideoDto = {
+    title: string,
+    author: string,
+    availableResolutions: typeof AvailableResolutions,
+    canBeDownloaded: boolean,
+    minAgeRestriction: number | null,
+    publicationDate: string
+}
+app.delete('/testing/all-data', (req: Request, res: Response) => {
+    videos.length = 0;
+    res.sendStatus(204)
+})
+app.get('/videos', (req: Request, res: Response) => {
+    res.send(videos)
+})
 app.get('/videos/:id', (req: RequestWithParams<Params>, res: Response) => {
     const id = +req.params.id
     const video = videos.find((v) => v.id === id)
@@ -71,8 +80,7 @@ app.get('/videos/:id', (req: RequestWithParams<Params>, res: Response) => {
 
     res.send(video)
 })
-
-app.post('/videos', (req: RequestWithBody<CreateVidioDto>, res: Response) => {
+app.post('/videos', (req: RequestWithBody<CreateVideoDto>, res: Response) => {
     let errors: ErrorType = {
         errorsMessages: []
     }
@@ -120,16 +128,6 @@ app.post('/videos', (req: RequestWithBody<CreateVidioDto>, res: Response) => {
 
     res.status(201).send(newVideo)
 })
-
-type UpdateVideoDto = {
-    title: string,
-    author: string,
-    availableResolutions: typeof AvailableResolutions,
-    canBeDownloaded: boolean,
-    minAgeRestriction: number | null,
-    publicationDate: string
-}
-
 app.put('/videos/:id', (req: RequestWithBodyAndParams<Params, any>, res: Response) => {
     const id = +req.params.id
 
@@ -193,7 +191,6 @@ app.put('/videos/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respons
 
     res.sendStatus(204)
 })
-
 app.delete('/videos/:id', (req: RequestWithParams<Params>, res: Response) => {
     const id = +req.params.id
     const video = videos.find((v) => v.id === id)

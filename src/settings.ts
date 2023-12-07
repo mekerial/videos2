@@ -193,7 +193,7 @@ app.put('/videos/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respons
 
     res.sendStatus(204)
 })
-//
+
 app.delete('/videos/:id', (req: RequestWithParams<Params>, res: Response) => {
     const id = +req.params.id
     const video = videos.find((v) => v.id === id)

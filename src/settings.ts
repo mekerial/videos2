@@ -91,7 +91,7 @@ app.post('/videos', (req: RequestWithBody<CreateVideoDto>, res: Response) => {
         res.sendStatus(400)
         return;
     }
-    if (!author || author.trim().length < 1 || author.trim().length > 40) {
+    if (!author || author.trim().length < 1 || author.trim().length > 20) {
         errors.errorsMessages.push({message: "Invalid title", field: "title"})
         res.sendStatus(400)
         return;

@@ -137,11 +137,13 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
     let {title, author, availableResolutions, canBeDownloaded, publicationDate,minAgeRestriction} = req.body
     if (!title || title.trim().length < 1 || title.trim().length > 40) {
         errors.errorsMessages.push({message: "Invalid title", field: "title"})
-        res.sendStatus(400)
+        res.send(errors)
+        res.status(400)
         return;
     }
     if (!author || author.trim().length < 1 || author.trim().length > 40) {
         errors.errorsMessages.push({message: "Invalid title", field: "title"})
+        res.send(errors)
         res.sendStatus(400)
         return;
     }

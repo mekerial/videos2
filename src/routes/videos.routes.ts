@@ -100,7 +100,7 @@ VideosRouter.post('/', (req: RequestWithBody<CreateVideoDto>, res: Response) => 
                 field: 'availableResolutions'
             })
         })
-    }else {
+    } else {
         availableResolutions = []
     }
     if (errors.errorsMessages.length){
@@ -115,7 +115,6 @@ VideosRouter.post('/', (req: RequestWithBody<CreateVideoDto>, res: Response) => 
 
     const newVideo = {
         id: +(new Date()),
-
         canBeDownloaded: false,
         minAgeRestriction: null,
         createdAt: createdAt.toISOString(),

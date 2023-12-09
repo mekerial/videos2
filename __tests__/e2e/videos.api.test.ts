@@ -1,5 +1,6 @@
 import request from 'supertest'
 import {app} from '../../src'
+
 describe('/videos', () => {
     beforeAll(async () => {
         await request(app).delete('/__test__/data')
@@ -12,13 +13,13 @@ describe('/videos', () => {
     })
 
 
-    it('should return 200 and empty array', async () => {
+    it('should return 200', async () => {
         await request(app)
-            .get('/videos/1')
+            .get('/videos/' + -1111)
             .expect(404)
     })
 
-    it(`should'nt create video with incorrect input data`, async () => {
+    it(`shouldn't create video with incorrect input data`, async () => {
         await request(app)
             .post('/videos')
             .send({ title: ''})
@@ -32,13 +33,7 @@ describe('/videos', () => {
     it('should create video with corrent input data', async () => {
         await request(app)
             .post('/videos')
-            .send({ title: 'new video', author: 'Bobius', availableResolutions: ["P144"]})
+            .send({ title: 'new video', author: 'Georgiy', availableResolutions: ["P144"]})
             .expect(201)
-
-
-
-
     })
-
-
 })

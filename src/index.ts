@@ -1,6 +1,6 @@
 import {app} from './settings'
 
-const port = 80;
+const port = 3002;
 export { app };
 
 app.listen(port, () => {

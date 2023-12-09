@@ -82,13 +82,13 @@ VideosRouter.post('/', (req: RequestWithBody<CreateVideoDto>, res: Response) => 
 
     if (!title || title.trim().length < 1 || title.trim().length > 40) {
         errors.errorsMessages.push({message: "Invalid title", field: "title"})
-        res.send({message: "Invalid title", field: "title"})
+        res.send(errors.errorsMessages)
         res.status(400)
         return;
     }
     if (!author || author.trim().length < 1 || author.trim().length > 20) {
         errors.errorsMessages.push({message: "Invalid title", field: "title"})
-        res.send({message: "Invalid title", field: "title"})
+        res.send(errors.errorsMessages)
         res.status(400)
         return;
     }

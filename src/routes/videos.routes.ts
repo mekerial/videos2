@@ -138,6 +138,13 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
         availableResolutions = []
     }
 
+
+    if (!canBeDownloaded || typeof (canBeDownloaded) !== 'undefined'){
+        errors.errorsMessages.push({
+            message: "Incorrect canBeDownload",
+            field: "canBeDownload"
+        })
+    }
     if (typeof canBeDownloaded === "undefined"){
         canBeDownloaded = false
     }

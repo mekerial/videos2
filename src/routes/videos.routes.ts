@@ -4,21 +4,13 @@ import {app} from "../settings";
 type RequestWithParams<P> = Request<P, {}, {}, {}>
 type RequestWithBody<B> = Request<{}, {}, B, {}>
 type RequestWithBodyAndParams<P,B> = Request<P, {}, B, {}>
-type CreateVideoDto = {
+type CreateVideo = {
     title: string,
     author: string,
     availableResolutions: typeof AvailableResolutions
 }
 type Params = {
     id: string
-}
-type UpdateVideoDto = {
-    title: string,
-    author: string,
-    availableResolutions: typeof AvailableResolutions,
-    canBeDownloaded: boolean,
-    minAgeRestriction: number | null,
-    publicationDate: string
 }
 type ErrorType = {
     errorsMessages: ErrorMessageType[]
@@ -27,7 +19,6 @@ type ErrorMessageType = {
     field: string
     message: string
 }
-
 const AvailableResolutions = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160']
 type VideoType = {
     id: number
@@ -39,6 +30,7 @@ type VideoType = {
     publicationDate: string
     availableResolutions: typeof AvailableResolutions
 }
+
 export const videos: VideoType[] = [
     {
         id: 1,
@@ -74,7 +66,7 @@ VideosRouter.get('/:id', (req: RequestWithParams<Params>, res: Response) => {
 
     res.send(video)
 })
-VideosRouter.post('/', (req: RequestWithBody<CreateVideoDto>, res: Response) => {
+VideosRouter.post('/', (req: RequestWithBody<CreateVideo>, res: Response) => {
     let errors: ErrorType = {
         errorsMessages: []
     }
@@ -82,15 +74,10 @@ VideosRouter.post('/', (req: RequestWithBody<CreateVideoDto>, res: Response) => 
 
     if (!title || title.trim().length < 1 || title.trim().length > 40) {
         errors.errorsMessages.push({message: "Invalid title", field: "title"})
-        res.send(errors)
-        res.status(400)
-        return;
     }
+
     if (!author || author.trim().length < 1 || author.trim().length > 20) {
         errors.errorsMessages.push({message: "Invalid title", field: "title"})
-        res.send(errors)
-        res.status(400)
-        return;
     }
 
     if (Array.isArray(availableResolutions)){
@@ -129,22 +116,15 @@ VideosRouter.post('/', (req: RequestWithBody<CreateVideoDto>, res: Response) => 
 })
 VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Response) => {
     const id = +req.params.id
-
     let errors: ErrorType = {
         errorsMessages: []
     }
     let {title, author, availableResolutions, canBeDownloaded, publicationDate,minAgeRestriction} = req.body
     if (!title || title.trim().length < 1 || title.trim().length > 40) {
         errors.errorsMessages.push({message: "Invalid title", field: "title"})
-        res.send(errors)
-        res.status(400)
-        return;
     }
     if (!author || author.trim().length < 1 || author.trim().length > 40) {
         errors.errorsMessages.push({message: "Invalid title", field: "title"})
-        res.send(errors)
-        res.sendStatus(400)
-        return;
     }
 
     if (Array.isArray(availableResolutions)) {
@@ -159,9 +139,12 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
     }
     if (typeof canBeDownloaded === "undefined"){
         canBeDownloaded = false
+    } else {
+        //
     }
+    // publication date
 
-    if (typeof minAgeRestriction !== "undefined" && typeof minAgeRestriction === "number"){
+    if (typeof minAgeRestriction !== "undefined" && typeof minAgeRestriction === "number") {
         minAgeRestriction < 1 || minAgeRestriction > 18 && errors.errorsMessages.push({
             message: "Invalid minAgeRestriction",
             field: "minAgeRestriction"
@@ -183,7 +166,7 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
         return;
     }
 
-    const updatedItem = {
+    const updatedEntity = {
         ...video,
         canBeDownloaded,
         minAgeRestriction,
@@ -192,7 +175,7 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
         availableResolutions,
         publicationDate: publicationDate ? publicationDate : video.publicationDate
     }
-    videos.splice(videoIndex, 1, updatedItem)
+    videos.splice(videoIndex, 1, updatedEntity)
 
     res.sendStatus(204)
 })

@@ -1,4 +1,5 @@
 import {Request, Response, Router} from "express";
+import {type} from "os";
 
 type RequestWithParams<P> = Request<P, {}, {}, {}>
 type RequestWithBody<B> = Request<{}, {}, B, {}>
@@ -136,12 +137,10 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
     } else {
         availableResolutions = []
     }
+
     if (typeof canBeDownloaded === "undefined"){
         canBeDownloaded = false
-    } else {
-        canBeDownloaded = false
     }
-
 
 
     if (typeof minAgeRestriction !== "undefined" && typeof minAgeRestriction === "number") {

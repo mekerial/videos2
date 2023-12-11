@@ -142,7 +142,7 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
     if (!canBeDownloaded || typeof (canBeDownloaded) !== 'boolean'){
         errors.errorsMessages.push({
             message: "Incorrect canBeDownload",
-            field: "canBeDownload"
+            field: "canBeDownloaded"
         })
     }
     if (typeof canBeDownloaded === "undefined"){
@@ -160,7 +160,7 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
     }
 
     if (errors.errorsMessages.length){
-        res.status(400).send(errors)
+        res.status(404).send(errors)
         return
     }
 

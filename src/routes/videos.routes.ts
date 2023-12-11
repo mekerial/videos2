@@ -1,5 +1,4 @@
 import {Request, Response, Router} from "express";
-import {app} from "../settings";
 
 type RequestWithParams<P> = Request<P, {}, {}, {}>
 type RequestWithBody<B> = Request<{}, {}, B, {}>

@@ -141,11 +141,7 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
     } else {
         canBeDownloaded = false
     }
-    if (typeof publicationDate === "undefined"){
-        publicationDate = false
-    } else {
-        publicationDate = false
-    }
+
 
 
     if (typeof minAgeRestriction !== "undefined" && typeof minAgeRestriction === "number") {

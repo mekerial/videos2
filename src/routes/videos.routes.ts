@@ -123,7 +123,7 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
         errors.errorsMessages.push({message: "Invalid title", field: "title"})
     }
     if (!author || author.trim().length < 1 || author.trim().length > 40) {
-        errors.errorsMessages.push({message: "Invalid title", field: "title"})
+        errors.errorsMessages.push({message: "Invalid title", field: "author"})
     }
 
     if (Array.isArray(availableResolutions)) {

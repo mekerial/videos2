@@ -148,6 +148,13 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
         canBeDownloaded = false
     }
 
+    if (publicationDate !== 'undefined' && {}.toString.call(publicationDate) !== '[object String]') {
+        errors.errorsMessages.push({
+            message: "Incorrect Publication Date",
+            field: "publicationDate"
+        })
+    }
+
 
     if (typeof minAgeRestriction !== "undefined" && typeof minAgeRestriction === "number") {
         minAgeRestriction < 1 || minAgeRestriction > 18 && errors.errorsMessages.push({
@@ -160,7 +167,7 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
 
     if (errors.errorsMessages.length){
         res.status(400).send(errors)
-        return
+        return;
     }
 
     const videoIndex = videos.findIndex(v => v.id === id)

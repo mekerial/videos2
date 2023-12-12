@@ -148,7 +148,7 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
         canBeDownloaded = false
     }
 
-    if (publicationDate !== 'undefined' && {}.toString.call(publicationDate) !== '[object String]') {
+    if (typeof publicationDate !== 'undefined' && {}.toString.call(publicationDate) !== '[object String]') {
         errors.errorsMessages.push({
             message: "Incorrect Publication Date",
             field: "publicationDate"

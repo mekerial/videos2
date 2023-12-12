@@ -20,7 +20,7 @@ type ErrorMessageType = {
     message: string
 }
 const AvailableResolutions = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160']
-type VideoType = {
+export type VideoType = {
     id: number
     title: string
     author: string
@@ -63,7 +63,6 @@ VideosRouter.get('/:id', (req: RequestWithParams<Params>, res: Response) => {
         res.sendStatus(404)
         return;
     }
-
     res.send(video)
 })
 VideosRouter.post('/', (req: RequestWithBody<CreateVideo>, res: Response) => {
@@ -77,7 +76,7 @@ VideosRouter.post('/', (req: RequestWithBody<CreateVideo>, res: Response) => {
     }
 
     if (!author || author.trim().length < 1 || author.trim().length > 20) {
-        errors.errorsMessages.push({message: "Invalid title", field: "title"})
+        errors.errorsMessages.push({message: "Invalid author", field: "author"})
     }
 
     if (Array.isArray(availableResolutions)){
@@ -160,7 +159,7 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
     }
 
     if (errors.errorsMessages.length){
-        res.status(404).send(errors)
+        res.status(400).send(errors)
         return
     }
 

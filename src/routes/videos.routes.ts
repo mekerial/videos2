@@ -113,6 +113,7 @@ VideosRouter.post('/', (req: RequestWithBody<CreateVideo>, res: Response) => {
 
     res.status(201).send(newVideo)
 })
+
 VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Response) => {
     const id = +req.params.id
     let errors: ErrorType = {
@@ -187,6 +188,7 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
         availableResolutions,
         publicationDate: publicationDate ? publicationDate : video.publicationDate
     }
+
     videos.splice(videoIndex, 1, updatedEntity)
 
     res.sendStatus(204)

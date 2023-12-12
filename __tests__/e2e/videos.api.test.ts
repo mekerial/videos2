@@ -40,6 +40,7 @@ describe('/videos', () => {
     it('- GET product by ID with incorrect id', async () => {
         await request(app).get('/videos/helloWorld').expect(404)
     })
+
     it('+ GET product by ID with correct id', async () => {
         await request(app)
             .get('/videos/' + newVideo!.id)

@@ -122,8 +122,8 @@ VideosRouter.put('/:id', (req: RequestWithBodyAndParams<Params, any>, res: Respo
     if (!title || title.trim().length < 1 || title.trim().length > 40) {
         errors.errorsMessages.push({message: "Invalid title", field: "title"})
     }
-    if (!author || author.trim().length < 1 || author.trim().length > 40) {
-        errors.errorsMessages.push({message: "Invalid title", field: "author"})
+    if (!author || author.trim().length < 1 || author.trim().length > 20) {
+        errors.errorsMessages.push({message: "Invalid author", field: "author"})
     }
 
     if (Array.isArray(availableResolutions)) {
